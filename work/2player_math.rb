@@ -26,15 +26,15 @@ class MathGame
     @current_player == @player1 ? @player1[:name] : @player2[:name]
   end
 
+  def switch_player 
+    @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
   def ask_player_name
     puts "Player 1: Enter your name:"
     @player1[:name] = gets.chomp
     puts "Player 2: Enter your name:"
     @player2[:name] = gets.chomp
-  end
-
-  def switch_player 
-    @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
   def division?
