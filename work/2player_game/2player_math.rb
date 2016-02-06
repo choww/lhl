@@ -33,7 +33,7 @@ class MathGame
   end
 
   def get_player 
-    @current_player == @player1 ? @player1.name : @player2.name
+    @current_player.name
   end
 
   def switch_player 
@@ -119,20 +119,12 @@ class MathGame
     declare_winner if @current_player.no_lives? 
   end
 
-  def get_winner
-    @player1.score > @player2.score ? @player1 : @player2
-  end
-
-  def get_loser
-    @player1.score > @player2.score ? @player2 : @player1
-  end
-
   # side effect: changes @game_ongoing value to false
   def declare_winner
+    winner = @player1.score > @player2.score ? @player1.name : @player2.name
     @game_ongoing = false
-    winner = get_winner
 
-    draw? ? "*** It's a draw! ***" : "*** #{winner.name} wins! ***" 
+    draw? ? "*** It's a draw! ***" : "*** #{winner} wins! ***" 
   end
 
   ##### CHECK IF GAME OVER #####
