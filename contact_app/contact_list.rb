@@ -1,9 +1,17 @@
+require 'byebug'
+require 'io/console'
 require_relative 'contact'
 
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 # Sample query: ruby contact_list.rb show 1 => should display the contact with and ID of 1
 class ContactList
   def initialize
+    # keep track of how many lines are left to read in contacts.csv
+    @readable_contacts = 0
+    # keep track of where you are in pagination [which idx you should start reading from]
+    @curr_row = 0
+    #TODO: move elsewhere
+    @contacts = Contact.all
   end
 
   def command_menu
@@ -12,29 +20,68 @@ class ContactList
     puts "show   - Show a contact"
     puts "search - Search contacts"
   end
+  
+  # track number of lines remaining to read in an open CSV file
+  def track_paginate
+    @readable_contacts = @contacts.length
+  end
 
-  def name_email
-    puts "Enter your full name:"
-    @name = gets.chomp
-    puts "Enter your email:"
-    @email = gets.chomp
+  def paginate_contacts
+    # while array not empty, keep on .shift(5)
+    last_row = @curr_row + 5
+    puts @contacts[@curr_row, last_row]
+    
+    @curr_row = last_row
+    @readable_contacts -= 5
+  end
+
+  def get_phone_numbers(contact)
+    len = contact.length
+    phone_arr = contact[3, len]
+    phone_arr.join(' ')
+  end
+
+  def total_records
+    #contacts.each do |contact|
+    #  numbers = get_phone_numbers(contact)
+    #  puts "#{contact[0]}: #{contact[1]} (#{contact[2]}) #{numbers}"
+    #end
+    puts "---"
+    puts "#{@contacts.length} records total"
+  end
+
+  def add_contact(info)
+    # use hash to store args & pass it to Contact.create & test for presence of phone key
+    name = info.first
+    if info.length == 3 
+      email = info.last
+      Contact.create(name, email)
+    else
+      email = info[1]
+      len = info.length 
+      phone = info[2, len]
+      Contact.create(name, email, phone)
+   end 
   end
 
   def eval_command(response)
-    case response
+    case response.shift
     when "new"
-      name = ARGV[1]
-      email = ARGV.last
-      Contact.create(name, email)
-      puts "#{name} has been added!"
+      add_contact(response)
     when "list"
-      p Contact.all
+      track_paginate
+      begin
+        paginate_contacts 
+        puts "Hit any key to show more"
+        STDIN.getch
+      end while @readable_contacts > 0
+      total_records
     when "show"
-      id = ARGV.last.to_i
-      p Contact.find(id)
+      id = response.shift.to_i
+      puts Contact.find(id)
     when "search"
-      term = ARGV.last
-      p Contact.search(term)
+      term = response.shift
+      puts Contact.search(term)
     else
       puts "Choose one from the  list of available commands: "
       command_menu
@@ -42,11 +89,11 @@ class ContactList
   end
   
   def run
-    response = ARGV.first
-    eval_command(response)
+    eval_command(ARGV)
   end 
 
 end
 
 list = ContactList.new
-list.run
+puts list.run
+
