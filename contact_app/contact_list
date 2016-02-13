@@ -1,4 +1,4 @@
-require 'byebug'
+#!/usr/bin/env ruby
 require 'io/console'
 require_relative 'contact'
 
@@ -10,7 +10,6 @@ class ContactList
     @readable_contacts = 0
     # keep track of where you are in pagination [which idx you should start reading from]
     @curr_row = 0
-    #TODO: move elsewhere
     @contacts = Contact.all
   end
 
@@ -27,7 +26,6 @@ class ContactList
   end
 
   def paginate_contacts
-    # while array not empty, keep on .shift(5)
     last_row = @curr_row + 5
     puts @contacts[@curr_row, last_row]
     
@@ -42,10 +40,6 @@ class ContactList
   end
 
   def total_records
-    #contacts.each do |contact|
-    #  numbers = get_phone_numbers(contact)
-    #  puts "#{contact[0]}: #{contact[1]} (#{contact[2]}) #{numbers}"
-    #end
     puts "---"
     puts "#{@contacts.length} records total"
   end
