@@ -1,14 +1,15 @@
 require 'pg'
+#require_relative 'phone_numbers'
 
 # Represents a person in an address book.
 class Contact
   attr_reader :id
   attr_accessor :name, :email, :phone
-  def initialize(name, email, id=nil)
+  def initialize(name, email, phone=[], id=nil)
     @id = id
     @name = name
     @email = email   
-    @phone = []
+    @phone = phone
   end
   
   def save
@@ -20,11 +21,15 @@ class Contact
     end
   end  
 
-  def set_phone(entry)
-    # etnry format looks like: "label: 123-4567"
-    entry = entry.split(' ')
-    "#{entry_arr[0]}: #{entry_arr[1]}"
+  def destroy
+    Contact.connection.exec_params("DELETE FROM contacts WHERE id=$1",[id])
   end
+
+  #def set_phone(entry)
+    # etnry format looks like: "label: 123-4567"
+  #  entry = entry.split(' ')
+  #  "#{entry_arr[0]}: #{entry_arr[1]}"
+  #end
   
   # Provides functionality for managing a list of Contacts in a database.
   class << self
@@ -37,20 +42,21 @@ class Contact
       );
     end
 
-   def duplicate_email?(email)
-     CSV.foreach(@@filename) do |contact|
-       return true if contact.include?(email)
-     end
-   end
+   # TODO: Fix
+   #def duplicate_email?(email)
+   #  query = connection.exec_params("SELECT name, $1::text, COUNT($1::text) FROM contacts GROUP BY name, $1::text  HAVING COUNT($1::text) > 1;", [email])
+   #  p query
+     
+  #end
   
-   def check_duplicate_email!(email)
-     if Contact.duplicate_email?(email)
-       raise ArgumentError, "Email already exists!"
-     end
-   end 
+   #def check_duplicate_email!(email)
+   #  if duplicate_email?(email)
+   #    raise ArgumentError, "Email already exists!"
+   #  end
+   #end 
 
    # Returns an Array of Contacts loaded from the database.
-   def all 
+    def all 
       contacts = []
       results = connection.exec_params('SELECT * FROM contacts;') 
       results.each do |contact|
@@ -60,24 +66,21 @@ class Contact
     end
   
     # Creates a new contact, adding it to the database, returning the new contact.
-    def create(name, email)
-      # TODO: implement!
+    # phone should be in the format: label1 number1 label2 number2 ...and so on
+    def create(name, email, *phone)
       #check_duplicate_email!(email)
       new_contact = self.new(name, email)         
-      new_contact.save
-      # TODO: implement this!
-      # add each phone number to new_contact if exists
-      #unless phone.empty? 
-      #  person.phone = phone
-      #  phone.flatten.each do |number|
-      #    new_contact <<  number
-      #  end
-      #end 
+      contact_id = new_contact.save
+
+      if phone.length > 0
+        (0...phone.length).step(2) do |item|
+          new_number = PhoneNumbers.create(phone[item], phone[item+1], contact_id.to_i)
+        end
+      end
     end
 
     # Returns the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
-      #result = nil
       result = connection.exec_params("SELECT * FROM contacts WHERE id=$1 LIMIT 1;", [id])
       contact = result[0]
       self.new(contact['name'], contact['email'], contact['id'])

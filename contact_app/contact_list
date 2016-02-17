@@ -16,6 +16,7 @@ class ContactList
   def command_menu
     puts "new    - Create a new contact"
     puts "update - Update an existing contact"
+    puts "delete - Delete an existing contact"
     puts "list   - List all contacts"
     puts "show   - Show a contact"
     puts "search - Search contacts"
@@ -58,15 +59,15 @@ class ContactList
   def add_contact(info)
     # use hash to store args & pass it to Contact.create & test for presence of phone key
     name = info.first
-    #if info.length == 2 
+    if info.length == 2 
       email = info.last
       Contact.create(name, email)
-    #else
-      #email = info[1]
-      #len = info.length 
-      #phone = info[2, len]
-      #Contact.create(name, email, phone)
-   #end 
+    else
+      email = info[1]
+      len = info.length 
+      phone = info[2, len]
+      Contact.create(name, email, phone)
+   end 
   end
 
   def update_contact(id)
@@ -81,12 +82,18 @@ class ContactList
     result.save
   end
 
+  def delete_contact(id)
+    contact = Contact.find(id[0])
+    contact.destroy
+  end
   def eval_command(response)
     case response.shift
     when "new"
       add_contact(response)
     when "update"
       update_contact(response)
+    when "delete"
+      delete_contact(response)
     when "list"
       track_paginate
       begin
