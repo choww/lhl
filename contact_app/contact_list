@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'byebug'
 require 'io/console'
 require_relative 'contact'
 require_relative 'phone_numbers'
@@ -8,11 +7,6 @@ require_relative 'phone_numbers'
 # Sample query: ruby contact_list.rb show 1 => should display the contact with and ID of 1
 class ContactList
   def initialize
-    # keep track of how many lines are left to read in contacts.csv
-    @readable_contacts = 0
-    # keep track of where you are in pagination [which idx you should start reading from]
-    @curr_row = 0
-    @contacts = Contact.all
   end
 
   def command_menu
@@ -24,23 +18,13 @@ class ContactList
     puts "search - Search contacts"
   end
   
-  # track number of lines remaining to read in an open CSV file
-  def track_paginate
-   @readable_contacts = @contacts.length
-  end
-
   def paginate_contacts
-    last_row = @curr_row + 5
-    grouped_contacts = @contacts[@curr_row, last_row]
-    
-    grouped_contacts.each do |contact|
+    Contact.all.each do |contact|
       format_contact(contact)
       format_phone(contact)
     end
-
-    @curr_row = last_row
-    @readable_contacts -= 5
-  end
+    Contact.next_page
+   end
 
   def format_phone(contact)
     contact.phone_numbers.each do |number|
@@ -55,7 +39,8 @@ class ContactList
  
   def total_records
     puts "---"
-    puts "#{@contacts.length} records total"
+    all_contacts = Contact.connection.exec("SELECT * FROM contacts")
+    puts "#{all_contacts.count} records total"
   end
 
   def add_contact(info)
@@ -97,12 +82,11 @@ class ContactList
     when "delete"
       delete_contact(response)
     when "list"
-      track_paginate
-      begin
-        paginate_contacts 
+        begin   
+        paginate_contacts
         puts "Hit any key to show more"
         STDIN.getch
-      end while @readable_contacts > 0
+      end while Contact.rows_left?
       total_records
     when "show"
       id = response.shift.to_i
@@ -125,4 +109,3 @@ end
 
 list = ContactList.new
 puts list.run
-

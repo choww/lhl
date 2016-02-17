@@ -1,9 +1,9 @@
 require 'byebug'
 require 'pg'
-#require_relative 'phone_numbers'
 
 # Represents a person in an address book.
 class Contact
+  @@paginate = 0
   attr_reader :id
   attr_accessor :name, :email
   def initialize(name, email,  id=nil)
@@ -55,14 +55,25 @@ class Contact
      end
    end 
 
+    def next_page
+      @@paginate += 1
+    end
+   
+    def get_offset
+      @@paginate * 5
+    end
+    
+    def rows_left?
+      get_offset < connection.exec("SELECT * FROM contacts").count
+    end
+
    # Returns an Array of Contacts loaded from the database.
-    def all 
-      contacts = []
-      results = connection.exec_params('SELECT * FROM contacts;')
-      results.each do |contact|
-        contacts << self.new(contact['name'], contact['email'], contact['id'])
+    def all
+      results = connection.exec_params('SELECT * FROM contacts LIMIT 5 OFFSET
+ $1::int;', [get_offset])
+      return results.map do |contact|
+        self.new(contact['name'], contact['email'], contact['id'])
       end 
-      contacts
     end
   
     # Creates a new contact, adding it to the database, returning the new contact.
@@ -83,20 +94,18 @@ class Contact
 
     # Returns the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
-      result = connection.exec_params("SELECT * FROM contacts WHERE id=$1 LIMIT 1;", [id])
-      contact = result[0]
+      result = connection.exec_params("SELECT * FROM contacts WHERE id=$1::int LIMIT 1;", [id])
+      contact = result[0] # put a guard here to make sure not nil 
       self.new(contact['name'], contact['email'], contact['id'])
     end
 
     # Returns an array of contacts who match the given term.
     def search(term)
       results = connection.exec_params("SELECT * FROM contacts WHERE name LIKE concat('%', $1::text, '%') OR email LIKE concat('%', $1::text, '%');", [term])
-      contacts = []
-      results.each do |contact|
-        contacts << Contact.new(contact['name'], contact['email'],contact['id'])
+      return results.map do |contact| 
+        Contact.new(contact['name'], contact['email'],contact['id'])
       end
-      contacts
-      # TODO: account for phone #s
+      #TODO: account for phone#s
     end
   end
 
