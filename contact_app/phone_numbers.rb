@@ -4,7 +4,7 @@ require_relative 'contact'
 class PhoneNumbers < Contact
   attr_reader :id, :contact_id
   attr_accessor :label, :number
-  def initialize(label, number, contact_id=nil, id=nil)
+  def initialize(label, number, contact_id, id=nil)
     @label = label
     @number = number
     @id = id

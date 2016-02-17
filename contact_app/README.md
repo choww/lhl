@@ -2,18 +2,18 @@ Contact List
 ============
 
 To run in terminal: 
-'''
+```
 ./contact_list [command]
-'''
+```
 
-where '[command]' is one of the commands below:
+where `[command]` is one of the commands below:
 
-'new [name] [email]' - Create new contact with a name & email
+`new [name] [email]` - Create new contact with a name & email
 
-'update [id]' - Update an existing contact with a specific ID
+`update [id]` - Update an existing contact with a specific ID
 
-'list' - List all contacts
+`list` - List all contacts
 
-'show [id]' - Show a specific contact by ID
+`show [id]` - Show a specific contact by ID
 
-'search [term]' - Find contacts based on a value [e.g. name]
+`search [term]` - Find contacts based on a value [e.g. name]

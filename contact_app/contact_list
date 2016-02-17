@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
+require 'byebug'
 require 'io/console'
 require_relative 'contact'
+require_relative 'phone_numbers'
 
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 # Sample query: ruby contact_list.rb show 1 => should display the contact with and ID of 1
@@ -33,24 +35,24 @@ class ContactList
     
     grouped_contacts.each do |contact|
       format_contact(contact)
+      format_phone(contact)
     end
 
     @curr_row = last_row
     @readable_contacts -= 5
   end
 
+  def format_phone(contact)
+    contact.phone_numbers.each do |number|
+      puts "#{number.label}: #{number.number}"
+    end
+  end
+
   def format_contact(contact)
     puts "#{contact.id} #{contact.name}"
     puts "#{contact.email}"
   end
-  
-  #TODO: include phone #s in Contact objects
-  def get_phone_numbers(contact)
-    len = contact.length
-    phone_arr = contact[3, len]
-    phone_arr.join(' ')
-  end
-
+ 
   def total_records
     puts "---"
     puts "#{@contacts.length} records total"
