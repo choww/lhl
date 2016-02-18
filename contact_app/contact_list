@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'byebug'
 require 'io/console'
 require_relative 'contact'
 require_relative 'phone_numbers'
@@ -44,7 +45,6 @@ class ContactList
   end
 
   def add_contact(info)
-    # use hash to store args & pass it to Contact.create & test for presence of phone key
     name = info.first
     if info.length == 2 
       email = info.last
@@ -57,15 +57,40 @@ class ContactList
    end 
   end
 
+  def update_phone(contact)
+    contact.phone_numbers.each do |phone|
+      puts "Current number: #{phone.label}: #{phone.number}"
+      puts "Enter new phone number type:"
+      new_label = STDIN.gets
+      puts "Enter new phone number:"
+      new_number = STDIN.gets
+     
+      phone.label = new_label
+      phone.number = new_number
+      phone.save
+    end
+  end
+
+  def current_contact(id)
+    contact = Contact.find(id)
+    format_contact(contact)
+    format_phone(contact)
+  end
+
   def update_contact(id)
-    puts "Enter new name:"
+    puts "** CURRENT INFO **"
+    current_contact(id)
+    
+    puts "\nEnter new name:"
     new_name = STDIN.gets
     puts "Enter new email:"
     new_email = STDIN.gets
-
-    result = Contact.find(id[0])
+    
+    result = Contact.find(id) 
     result.name = new_name
     result.email = new_email
+    
+    update_phone(result) #if response.upcase == 'YES'  
     result.save
   end
 
@@ -78,7 +103,10 @@ class ContactList
     when "new"
       add_contact(response)
     when "update"
-      update_contact(response)
+      id = response.shift.to_i
+      update_contact(id)
+      puts "\n** UPDATED **"
+      current_contact(id)
     when "delete"
       delete_contact(response)
     when "list"
@@ -90,7 +118,7 @@ class ContactList
       total_records
     when "show"
       id = response.shift.to_i
-      format_contact(Contact.find(id))
+      current_contact(id)
     when "search"
       term = response.shift
       results = Contact.search(term)

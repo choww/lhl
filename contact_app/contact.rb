@@ -26,12 +26,10 @@ class Contact
   end
 
   def phone_numbers
-    numbers = []
     results = Contact.connection.exec_params("SELECT p.label, p.number FROM contacts AS c INNER JOIN phone_numbers as p ON c.id = p.contact_id WHERE c.id = $1 GROUP BY p.label, p.number", [id])
-    results.each do |number|
-      numbers << PhoneNumbers.create(number['label'], number['number'], number['contact_id'])
+    return results.map do |number|
+      PhoneNumbers.create(number['label'], number['number'], number['contact_id'], number['id'])
     end
-    numbers
   end
  
   # Provides functionality for managing a list of Contacts in a database.

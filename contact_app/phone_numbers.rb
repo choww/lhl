@@ -21,7 +21,7 @@ class PhoneNumbers < Contact
       @id = query[0]['id']
       self
     else
-      PhoneNumbers.connection.exec_params("UPDATE contacts SET label=$1, number=$2 WHERE id=$3;", [@label, @number, @id])
+      PhoneNumbers.connection.exec_params("UPDATE phone_numbers SET label=$1, number=$2 WHERE id=$3;", [@label, @number, @id])
     end
   end
 
@@ -30,8 +30,8 @@ class PhoneNumbers < Contact
       super
     end
 
-    def create(label, number, contact_id)
-      new_number = self.new(label, number, contact_id)
+    def create(label, number, contact_id, id=nil)
+      new_number = self.new(label, number, contact_id, id)
       new_number.save
     end
   end
