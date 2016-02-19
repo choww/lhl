@@ -1,53 +1,52 @@
 #!/usr/bin/env ruby
+require 'byebug'
 require 'io/console'
 require_relative 'contact'
+require_relative 'phone_numbers'
 
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 # Sample query: ruby contact_list.rb show 1 => should display the contact with and ID of 1
 class ContactList
   def initialize
-    # keep track of how many lines are left to read in contacts.csv
-    @readable_contacts = 0
-    # keep track of where you are in pagination [which idx you should start reading from]
-    @curr_row = 0
-    @contacts = Contact.all
   end
 
   def command_menu
     puts "new    - Create a new contact"
+    puts "update - Update an existing contact"
+    puts "delete - Delete an existing contact"
     puts "list   - List all contacts"
     puts "show   - Show a contact"
     puts "search - Search contacts"
   end
   
-  # track number of lines remaining to read in an open CSV file
-  def track_paginate
-    @readable_contacts = @contacts.length
-  end
-
   def paginate_contacts
-    last_row = @curr_row + 5
-    puts @contacts[@curr_row, last_row]
-    
-    @curr_row = last_row
-    @readable_contacts -= 5
+    Contact.all.each do |contact|
+      format_contact(contact)
+      format_phone(contact)
+    end
+    Contact.next_page
+   end
+
+  def format_phone(contact)
+    contact.phone_numbers.each do |number|
+      puts "#{number.label}: #{number.number}"
+    end
   end
 
-  def get_phone_numbers(contact)
-    len = contact.length
-    phone_arr = contact[3, len]
-    phone_arr.join(' ')
+  def format_contact(contact)
+    puts "#{contact.id} #{contact.name}"
+    puts "#{contact.email}"
   end
-
+ 
   def total_records
     puts "---"
-    puts "#{@contacts.length} records total"
+    all_contacts = Contact.connection.exec("SELECT * FROM contacts")
+    puts "#{all_contacts.count} records total"
   end
 
   def add_contact(info)
-    # use hash to store args & pass it to Contact.create & test for presence of phone key
     name = info.first
-    if info.length == 3 
+    if info.length == 2 
       email = info.last
       Contact.create(name, email)
     else
@@ -58,24 +57,72 @@ class ContactList
    end 
   end
 
+  def update_phone(contact)
+    contact.phone_numbers.each do |phone|
+      puts "Current number: #{phone.label}: #{phone.number}"
+      puts "Enter new phone number type:"
+      new_label = STDIN.gets
+      puts "Enter new phone number:"
+      new_number = STDIN.gets
+     
+      phone.label = new_label
+      phone.number = new_number
+      phone.save
+    end
+  end
+
+  def current_contact(id)
+    contact = Contact.find(id)
+    format_contact(contact)
+    format_phone(contact)
+  end
+
+  def update_contact(id)
+    puts "** CURRENT INFO **"
+    current_contact(id)
+    
+    puts "\nEnter new name:"
+    new_name = STDIN.gets
+    puts "Enter new email:"
+    new_email = STDIN.gets
+    
+    result = Contact.find(id) 
+    result.name = new_name
+    result.email = new_email
+    
+    update_phone(result) #if response.upcase == 'YES'  
+    result.save
+  end
+
+  def delete_contact(id)
+    contact = Contact.find(id[0])
+    contact.destroy
+  end
   def eval_command(response)
     case response.shift
     when "new"
       add_contact(response)
+    when "update"
+      id = response.shift.to_i
+      update_contact(id)
+      puts "\n** UPDATED **"
+      current_contact(id)
+    when "delete"
+      delete_contact(response)
     when "list"
-      track_paginate
-      begin
-        paginate_contacts 
+        begin   
+        paginate_contacts
         puts "Hit any key to show more"
         STDIN.getch
-      end while @readable_contacts > 0
+      end while Contact.rows_left?
       total_records
     when "show"
       id = response.shift.to_i
-      puts Contact.find(id)
+      current_contact(id)
     when "search"
       term = response.shift
-      puts Contact.search(term)
+      results = Contact.search(term)
+      results.each {|contact| format_contact(contact)} 
     else
       puts "Choose one from the  list of available commands: "
       command_menu
@@ -90,4 +137,3 @@ end
 
 list = ContactList.new
 puts list.run
-
