@@ -1,0 +1,18 @@
+<a href="/messages/new">Post a message</a>
+
+<% @messages.each do |msg| %>
+  <div class="message">
+    <h3>
+      <a href="/messages/<%= msg.id %>">
+        <%= msg.title %> 
+      </a>
+      <small>(by: <%= msg.author %>)</small>
+    </h3>
+
+    <p>
+      <%= msg.content %>
+    </p>
+  </div>
+<% end %>
+
+
