@@ -10,20 +10,41 @@ body {
 
 #team-members {
   clear: both;
-}
 
-#team-members .member {
-  float: left;
-  /*border: 1px solid gray;*/
-  margin: 10px;
-  padding: 6px;
-}
+  .member {
+    float: left;
+    margin: 10px;
+    padding: 6px;
 
-#team-members .member img {
-  width: 200px;
-  height: 200px;
-}
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 1px solid gray;
+      box-shadow: 5px 5px 3px gray;
+      -webkit-transition: all 1.5;
+      transition: all 1.5s;
+      &:hover {
+        -webkit-transform:scale(1.1);
+        transform:  scale(1.1);
+      }
+    }
+   .swap-img {
+      display:none;
+    } 
 
-#team-members .member div.name {
-  text-align: center;  
+    &:hover img:first-child {
+      display:none;
+    }
+    &:hover .swap-img {
+      display:inline-block;
+      }     
+   
+
+    div.name {
+      text-align: center;
+    }
+  }
+ 
+
 }
