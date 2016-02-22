@@ -1,0 +1,22 @@
+<h1><%= @song.title %></h1>
+
+<p>
+  Added <%= @song.created_at.strftime("%b %d, %Y @ %H: %M") %> by <%= @song.author %>
+  <br/>
+  <% if @song.url %>
+    <a href="<%= @song.url %>"><%= @song.url %></a>
+  <% end %>
+</p>
+
+<h2>Other songs by <%= @song.author %></h2>
+<p>
+  <% @more_songs.each do |song| %>
+    <h3><%= song.title %></h3>
+    Added <%= song.created_at.strftime("%b %d, %Y @ %H: %M") %><br/>
+    <% if song.url %>
+      <a href="<%= song.url %>"><%= song.url %></a>
+    <% end %>
+  <% end %>
+</p>
+
+<p><a href="/">Back to previous page</a></p>

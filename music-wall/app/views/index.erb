@@ -1,0 +1,13 @@
+<div class="jumbotron text-center">
+  <h1>Music Wall</h1>
+  <a href="/new">Add a new song</a>
+</div>
+
+<% if @songs %> 
+  <% @songs.each do |song| %>
+    <h2><%= song.title %></h2>
+    <a href="<%= song.url %>"><%= song.url %></a><br/>
+    Added by <%= song.author %> on <%= song.created_at.strftime("%b %d, %Y @ %H: %M") %><br/>
+    <a href="/<%= song.id %>">see more</a>
+   <% end %> 
+<% end %>
