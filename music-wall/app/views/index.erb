@@ -1,13 +1,33 @@
 <div class="jumbotron text-center">
   <h1>Music Wall</h1>
-  <a href="/new">Add a new song</a>
+  
+  <% if @current_user %>
+    <h2>Hello <%= @current_user.name %>!</h2><br/>
+    <a href="/new-song">add a new song</a> or <a href="/logout">log out</a>
+  <% else %>
+    <a href="/signup">Sign up</a> or <a href="/login">log in</a>
+  <% end %>
 </div>
 
 <% if @songs %> 
+  <div class="bg-danger text-danger">
+    <%= @error if @error %>
+  </div>
+
   <% @songs.each do |song| %>
-    <h2><%= song.title %></h2>
+
+    <h3><%= song.title %></h3>
     <a href="<%= song.url %>"><%= song.url %></a><br/>
-    Added by <%= song.author %> on <%= song.created_at.strftime("%b %d, %Y @ %H: %M") %><br/>
-    <a href="/<%= song.id %>">see more</a>
+    Added by <%= song.user.name %> on <%= song.song_added_date %><br/>
+    <% if @current_user %>
+      <form method="POST" action="/song-<%= song.id %>/upvote">
+       <!-- <input type="hidden" name="_method" value="PUT"> -->
+        <button type="submit" class="btn btn-primary">upvote</button>
+      </form>
+    <% end %>
+     Votes: <strong><%= song.votes %></strong>
+    <p>
+      <a href="/user-<%= song.user.id %>/song-<%= song.id %>">see more</a>
+    </p>
    <% end %> 
 <% end %>

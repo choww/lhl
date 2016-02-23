@@ -1,18 +1,20 @@
 <h1><%= @song.title %></h1>
 
 <p>
-  Added <%= @song.created_at.strftime("%b %d, %Y @ %H: %M") %> by <%= @song.author %>
+  Artist: <%= @song.author %><br/>
+  Added <%= @song.song_added_date %> by <%= @song.user.name %>
   <br/>
   <% if @song.url %>
     <a href="<%= @song.url %>"><%= @song.url %></a>
   <% end %>
 </p>
 
-<h2>Other songs by <%= @song.author %></h2>
+<h2>Other songs added by <%= @user.name %></h2>
 <p>
   <% @more_songs.each do |song| %>
     <h3><%= song.title %></h3>
-    Added <%= song.created_at.strftime("%b %d, %Y @ %H: %M") %><br/>
+    Artist: <%= song.author %><br/>
+    Added <%= song.song_added_date %><br/>
     <% if song.url %>
       <a href="<%= song.url %>"><%= song.url %></a>
     <% end %>
