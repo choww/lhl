@@ -1,3 +1,5 @@
+<p><a href="/">Back to previous page</a></p>
+
 <h1><%= @song.title %></h1>
 
 <p>
@@ -7,9 +9,76 @@
   <% if @song.url %>
     <a href="<%= @song.url %>"><%= @song.url %></a>
   <% end %>
+  
+  <% if @current_user %>
+	  <form action="/song-<%= @song.id %>" method="POST">
+	    <input type="hidden" name="_method" value="DELETE">
+	    <button class="btn btn-danger">delete song</button>  
+	  </form>
+  <% end %>
+
 </p>
 
-<h2>Other songs added by <%= @user.name %></h2>
+<% if @current_user.nil? %>
+   <p><a href="/signup">Sign up</a> or <a href="/login">log in</a> to leave a review!</p>
+<% elsif @current_user && !@song.reviewed?(@current_user) %>
+  <% if @review.errors.any? %>
+    <div class="bg-danger text-danger">
+	    <ul>
+	    <% @review.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </div>
+	  <% end %> 
+	
+	  <form action="/song-<%= @song.id %>" method="POST">
+      <label>Rating:</label>
+      <select class="form-control" name="rating">
+        <option>1</option>    
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+
+	    <div class="form-group">
+	      <label>Review:</label>
+	      <textarea class="form-control" name="content"></textarea>
+	    </div>
+	
+	  <div>
+	    <input type="submit" value="Submit" class="btn btn-primary">
+	  </div>
+	</form>
+
+<% end %>
+
+<h3>Reviews for <%= @song.title %></h3>
+<% if @song.reviews.exists? %>
+  <% @song.reviews.each do |review| %>
+  <p>
+    Writen by <strong><%= review.user.name %></strong>:<br/> 
+
+    <div class="review">
+      Rating: <strong><%= review.rating %></strong><br/>
+	    <%= review.content %>
+	
+	    <% if @current_user == review.user %>
+	      <form action="/song-<%= @song.id %>/review-<%= review.id %>" method="POST">
+	        <input type="hidden" name="_method" value="DELETE">
+	        <button type="submit" class="btn btn-danger">delete</button>
+	      </form> 
+	    <% end %>
+    </div>
+
+  </p>
+  <% end %>
+<% else %>
+  <p>None yet--add a review!</p>
+<% end %>
+
+<hr/>
+<h2>Other songs added by <%= @song.user.name %></h2>
 <p>
   <% @more_songs.each do |song| %>
     <h3><%= song.title %></h3>
@@ -21,4 +90,4 @@
   <% end %>
 </p>
 
-<p><a href="/">Back to previous page</a></p>
+

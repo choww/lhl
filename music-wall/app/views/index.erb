@@ -9,25 +9,29 @@
   <% end %>
 </div>
 
+<div class="song-wall">
 <% if @songs %> 
   <div class="bg-danger text-danger">
     <%= @error if @error %>
   </div>
 
   <% @songs.each do |song| %>
+  <div class="song">
+    <div class="song-info">
+	    <h3><a href="/song-<%= song.id %>"><%= song.title %></a></h3>
+	    <a href="<%= song.url %>"><%= song.url %></a><br/>
+	    Added by <%= song.user.name %> on <%= song.song_added_date %><br/>
+    </div>
 
-    <h3><%= song.title %></h3>
-    <a href="<%= song.url %>"><%= song.url %></a><br/>
-    Added by <%= song.user.name %> on <%= song.song_added_date %><br/>
-    <% if @current_user %>
-      <form method="POST" action="/song-<%= song.id %>/upvote">
-       <!-- <input type="hidden" name="_method" value="PUT"> -->
-        <button type="submit" class="btn btn-primary">upvote</button>
-      </form>
-    <% end %>
-     Votes: <strong><%= song.votes %></strong>
-    <p>
-      <a href="/user-<%= song.user.id %>/song-<%= song.id %>">see more</a>
-    </p>
+    <div class="votes">
+      <% if @current_user %>
+	      <form method="POST" action="/song-<%= song.id %>/upvote">
+	        <button type="submit" class="btn btn-vote">Upvote</button>
+	      </form>
+      <% end %>
+      Votes: <strong><%= song.votes %></strong>
+    </div>
+   </div>
    <% end %> 
 <% end %>
+</div>

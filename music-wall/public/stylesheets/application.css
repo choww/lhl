@@ -1,0 +1,33 @@
+.song-wall {
+  margin: auto;
+  width: 40%;
+}
+
+.song {
+  padding-bottom: 10px;
+  clear: both;
+}
+
+.song-info {
+  float:left;
+}
+
+.btn-vote {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.votes {
+  margin-top: 20px;
+  padding: 5px 10px;
+  float: right;
+  border-radius: 10px;
+  background: #eee;
+}
+
+.review {
+  padding: 5px 10px;
+  width: 50%;
+  background: #eee;
+}
