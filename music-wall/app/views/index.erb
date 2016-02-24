@@ -25,11 +25,16 @@
 
     <div class="votes">
       <% if @current_user %>
-	      <form method="POST" action="/song-<%= song.id %>/upvote">
-	        <button type="submit" class="btn btn-vote">Upvote</button>
+	      <form  class=="vote-buttons" method="POST" action="/song-<%= song.id %>/vote">
+	        <button type="submit" class="btn btn-vote" name="upvote" value="upvote">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+          </button>
+          <button type="submit" class="btn btn-vote" name="downvote" value="downvote">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </button>
 	      </form>
       <% end %>
-      Votes: <strong><%= song.votes %></strong>
+      Votes: <strong><%= song.total_votes %></strong>
     </div>
    </div>
    <% end %> 

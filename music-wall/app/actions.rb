@@ -2,7 +2,7 @@ get '/' do
   logged_in = session[:user_id] 
   @current_user = User.find(logged_in) if logged_in
   session[:votes] ||= []
-  @songs = Song.order(votes: :desc)
+  @songs = Song.all
   erb :index
 end
 
@@ -53,11 +53,7 @@ end
  
 post '/new-song' do 
   @user = User.find(session[:user_id])
-  @song = @user.songs.new(
-    title: params[:title], 
-    author: params[:author], 
-    url: params[:url] 
-  ) 
+  @song = @user.songs.new(params[:song]) 
   if @song.save 
     redirect '/'  
   else 
@@ -97,6 +93,21 @@ post '/song-:id' do
   end
 end
 
+get '/edit/song-:id' do
+  @song = Song.find(params[:id])
+  erb :'songs/edit'
+end
+
+put '/song-:id' do
+  @song = Song.find(params[:id])
+  @song.update_attributes(params[:song])
+  if @song.save
+    redirect "/song-#{@song.id}"
+  else
+    erb :'songs/show'
+  end
+end
+
 delete '/song-:id' do
   @song = Song.find(params[:id])
   @song.destroy
@@ -109,15 +120,15 @@ delete '/song-:id/review-:rid' do
   redirect "/song-#{params[:id]}"
 end
 
-post '/song-:id/upvote' do
+post '/song-:id/vote' do
   logged_in = session[:user_id]
   @current_user = User.find(logged_in) if logged_in
   @song = Song.find(params[:id]) 
-  if session[:votes].include?(@song.id)
-    erb :index
-  else 
-    session[:votes] << @song.id
-    @song.upvote
-    redirect '/'
- end
+  
+  if params[:upvote] && @current_user.can_vote?(@song, 'up')
+    @current_user.upvote(@song)
+  elsif params[:downvote] && @current_user.can_vote?(@song, 'down')
+    @current_user.downvote(@song)
+  end
+  redirect '/' 
 end 

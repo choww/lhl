@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223214032) do
+ActiveRecord::Schema.define(version: 20160224003830) do
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "song_id"
@@ -29,10 +29,9 @@ ActiveRecord::Schema.define(version: 20160223214032) do
     t.string   "title"
     t.string   "author"
     t.string   "url"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.integer  "votes",      default: 0
   end
 
   add_index "songs", ["user_id"], name: "index_songs_on_user_id"
@@ -43,5 +42,16 @@ ActiveRecord::Schema.define(version: 20160223214032) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "votes", force: :cascade do |t|
+    t.string   "category"
+    t.integer  "user_id"
+    t.integer  "song_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "votes", ["song_id"], name: "index_votes_on_song_id"
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id"
 
 end

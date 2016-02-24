@@ -1,0 +1,24 @@
+<h1>Edit Song</h1>
+
+<form action="/song-<%= @song.id %>" method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  
+  <div class="form-group">
+    <label>Author</label>
+    <input type="text" name="song[author]" value="<%= @song.author %>" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" name="song[title]" value="<%= @song.title %>" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>URL</label>
+    <input type="text" name="song[url]" value="<%= @song.url %>" class="form-control">
+  </div>
+
+  <div>
+    <input type="submit" value="Edit" class="btn btn-primary">
+  </div>
+</form>

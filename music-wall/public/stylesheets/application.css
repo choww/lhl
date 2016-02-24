@@ -1,6 +1,6 @@
 .song-wall {
   margin: auto;
-  width: 40%;
+  width: 50%;
 }
 
 .song {
@@ -10,6 +10,10 @@
 
 .song-info {
   float:left;
+}
+
+.vote-buttons span {
+  margin: auto;
 }
 
 .btn-vote {

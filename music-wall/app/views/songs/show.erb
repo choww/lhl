@@ -11,6 +11,7 @@
   <% end %>
   
   <% if @current_user %>
+    <p><a class="btn btn-info" href="/edit/song-<%= @song.id %>" role="button">edit song</a></p>
 	  <form action="/song-<%= @song.id %>" method="POST">
 	    <input type="hidden" name="_method" value="DELETE">
 	    <button class="btn btn-danger">delete song</button>  
@@ -33,7 +34,7 @@
 	
 	  <form action="/song-<%= @song.id %>" method="POST">
       <label>Rating:</label>
-      <select class="form-control" name="rating">
+      <select class="form-control" name="rating" id="song-rating">
         <option>1</option>    
         <option>2</option>
         <option>3</option>

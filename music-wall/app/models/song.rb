@@ -1,6 +1,7 @@
 class Song < ActiveRecord::Base
   belongs_to :user
   has_many :reviews
+  has_many :votes
 
   validates :title, :author, presence: true
   validates :url, allow_blank: true,
@@ -16,8 +17,9 @@ class Song < ActiveRecord::Base
     Review.where(song_id: id, user_id: user.id).exists? 
   end
   
-  def upvote
-    self.increment(:votes)
-    self.save
+  def total_votes
+    upvotes = votes.where(category: 'up').count
+    downvotes = votes.where(category: 'down').count
+    upvotes - downvotes
   end
 end
