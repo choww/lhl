@@ -2,12 +2,12 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all 
 
-    search_params = [params[:title], params[:director], params[:duration]]
+    search_params = [params[:title_or_director], params[:duration]]
     @search_params = search_params.select { |param| !param.nil? }
 
     unless @search_params.empty? 
-      params[:duration] = '> 0' if params[:duration].nil? || params[:duration].empty? 
-      @results =  Movie.where("title LIKE ? AND director LIKE ? AND runtime_in_minutes #{params[:duration]}", "%#{params[:title]}%", "%#{params[:director]}%")  
+      params[:duration] = '> 0' if params[:duration].nil? || params[:duration].empty?
+      @results = Movie.search_movie(params[:title_or_director], params[:duration])
     end
   end
 

@@ -8,7 +8,6 @@ class Movie < ActiveRecord::Base
   validates :title, presence: true
   validates :director, presence: true
   validates :runtime_in_minutes, numericality: { only_integer: true }
-  validates :image, presence: true
   validates :description, presence: true
   validates :release_date, presence: true
 
@@ -16,6 +15,10 @@ class Movie < ActiveRecord::Base
 
   validate :image_size_validation
   validate :release_date_is_in_past
+
+  scope :search_movie, -> (title_or_director, duration) { 
+    where("title LIKE ? OR director LIKE ? AND runtime_in_minutes #{duration}", "%#{title_or_director}%", "%#{title_or_director}%")
+   }
 
   def review_average
     reviews.sum(:rating_out_of_ten)/reviews.size if reviews.exists?
