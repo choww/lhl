@@ -1,5 +1,4 @@
-<h1>Profile for <%= @user.full_name %></h1>
-
+<h1>Profile for <%= full_name(@user) %></h1>
 <h2>Movies reviewed</h2>
 
 <% @user.reviews.each do |review| %>

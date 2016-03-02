@@ -5,9 +5,12 @@ Rails.application.routes.draw do
     resources :actors
     resources :reviews, only: [:new, :create]
   end
-
-  resources :users, only: [:new, :create, :show]
-  resources :sessions, only: [:new, :create, :destroy]
+  
+  namespace :admin do
+    resources :users
+  end
+ resources :users, only: [:new, :create, :show]
+ resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'movies#index'
   # The priority is based upon order of creation: first created -> highest priority.

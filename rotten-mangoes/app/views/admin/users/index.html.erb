@@ -1,0 +1,6 @@
+<h1>Users</h1>
+<% @users.each do |user| %>
+  <%= link_to full_name(user), user_path(user) %>
+  <%= link_to 'delete', admin_user_path(user), method: :delete, data: { confirm: 'You sure?' } %>
+  <br/>
+<% end %>
