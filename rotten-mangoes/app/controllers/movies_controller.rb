@@ -1,6 +1,20 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.all
+    @movies = Movie.all 
+
+    title = Movie.where("title LIKE ?", "%#{params[:title]}%")
+    director = Movie.where("director LIKE ?", "%#{params[:director]}%")
+    query = "runtime_in_minutes #{params[:duration]}"
+    duration = Movie.where(query)    
+    
+    search_params = [params[:title], params[:director], params[:duration]]
+
+    @query = []
+    search_params.each do |var|
+      @query << var unless var.nil?
+    end
+
+    @results = (title && director && duration)
   end
 
   def show
