@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'sessions/new'
-  get 'sessions/create'
-
-  get 'users/new'
-  get 'users/create'
-
   resources :movies do 
+    resources :roles, except: [:new, :create]
+    resources :actors
     resources :reviews, only: [:new, :create]
   end
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'movies#index'
