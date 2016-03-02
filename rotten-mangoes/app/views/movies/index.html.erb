@@ -6,18 +6,18 @@
 <%= form_tag('/movies', method: 'get') do %>
   <div class="form-group">
     <%= label_tag(:title) %><br/>
-    <%= text_field_tag('title', '', class: 'form-control') %>
+    <%= text_field_tag(:title, '', class: 'form-control') %>
   </div>
 
   <div class="form-group">
     <%= label_tag(:director) %><br/>
-    <%= text_field_tag('director', '', class: 'form-control') %>
+    <%= text_field_tag(:director, '', class: 'form-control') %>
   </div>
 
   <div class="form-group">
     <%= label_tag(:duration) %><br/>
-    <%= select_tag(':duration', options_for_select(
-                                [['','>0'],
+    <%= select_tag(:duration, options_for_select(
+                                [['',''],
                                 ['Under 90 mins', '< 90'], 
                                 ['Between 90-120 mins', 'BETWEEN 90 AND 120'],
                                 ['Over 120 mins', '> 120']]),
@@ -29,14 +29,16 @@
   </div>
 <% end %>
 
-<% unless @query.empty? %>
-  <h2>You searched for: <%= @query %></h2>
+<% unless @search_params.empty? %>
+  <h2>You searched for: <%= @search_params.join(',') %></h2>
   <% @results.each do |result| %>
     <%= result.title %><br/>
     <%= result.release_date %><br/>
     Dir. <%= result.director %> | <%= result.runtime_in_minutes %> minutes<br/>
     <p><%= result.description %></p>
   <% end %>
+
+  <% @search_params.clear %>
 <% end %>
 
 <hr>
