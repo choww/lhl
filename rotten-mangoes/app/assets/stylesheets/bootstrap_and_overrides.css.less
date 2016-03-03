@@ -32,5 +32,12 @@
 
 /// CSS OVERRIDES ///
 
-h1 a {color: @gray-dark;}
-h1 a:hover {color: @gray-dark;}
+h1 a { color: @gray-dark; }
+h1 a:hover { color: @gray-dark; }
+
+.delete-link { color: @brand-danger; }
+.delete-link:hover { color: darken(@brand-danger, 5%); } 
+
+#signup-form, #login-form { display: none; }
+
+input[type]:not([type="submit"]) { background: none; }
