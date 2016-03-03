@@ -1,19 +1,13 @@
 class ActorsController < ApplicationController
-
   before_action :init_movie
-
-  def new
-    @actor = @movie.actors.build
-    @actor.roles.build
-  end
 
   def create
     @actor = @movie.actors.build(actor_params)
     if @actor.save
-      redirect_to movie_path(@movie)
-    else
-      render :new
-    end 
+      render json: @actor.as_json( include: {roles: {only: :name}} ),  
+                   status: :created, 
+                   location: @movie      
+    end
   end
 
   def show

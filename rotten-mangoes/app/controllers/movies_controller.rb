@@ -17,6 +17,8 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
+    @actor = @movie.actors.build
+    @actor.roles.build
   end
 
   def new

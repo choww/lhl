@@ -1,6 +1,6 @@
 <h1>Add New Actor</h1>
 
-<%= form_for [@movie,@actor] do |f| %>
+<%= form_for [@movie,@actor], remote: true do |f| %>
   <div class="form-group">
     <%= f.label :firstname %><br/>
     <%= f.text_field :firstname, class: 'form-control' %>

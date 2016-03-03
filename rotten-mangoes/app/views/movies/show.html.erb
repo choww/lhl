@@ -15,14 +15,15 @@
 <p><%= @movie.description %></p>
 
 <h3>Cast</h3>
-<p> <%= link_to 'Add an actor/actress', new_movie_actor_path(@movie) %></p>
 
-<p>
-  <% @movie.roles.each do |role| %>
+<%= render 'actors/add_actors' %>
+
+<% @movie.roles.each do |role| %>
+  <p>
     <%= role.name %>: <%= full_name(role.actor) %>
-    <br/>
-  <% end %>
-</p>
+  </p>
+<% end %>
+<div id="movie-cast"></div>
 
 <hr>
 
