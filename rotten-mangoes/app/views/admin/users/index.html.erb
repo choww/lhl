@@ -4,8 +4,8 @@
 <p>
   <% @users.each do |user| %>
     <%= link_to full_name(user), user_path(user) %>
-    <%= link_to 'edit', edit_user_path(user) %>
-    <%= link_to 'delete', user_path(user), method: :delete, data: { confirm: 'You sure?' } %>
+    <%= link_to 'edit', edit_admin_user_path(user) %>
+    <%= link_to 'delete', admin_user_path(user), method: :delete, data: { confirm: 'You sure?' } %>
     <br/>
   <% end %>
 </p>
