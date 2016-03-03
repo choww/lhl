@@ -22,16 +22,15 @@
 // Glyphicons
 @import "twitter/bootstrap/glyphicons.less";
 
-// Your custom LESS stylesheets goes here
-//
-// Since bootstrap was imported above you have access to its mixins which
-// you may use and inherit here
-//
-// If you'd like to override bootstrap's own variables, you can do so here as well
-// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
-//
-// Example:
-// @link-color: #ff0000;
+/// VARIABLE OVERRIDES ///
+@yellow: #f2ab00;
 
-@link-color:#f2ab00;
-@btn-primary-bg: #f2ab00;
+@link-color:@yellow;
+@btn-primary-bg: @yellow;
+@input-border: @yellow;
+@input-border-focus: @yellow;
+
+/// CSS OVERRIDES ///
+
+h1 a {color: @gray-dark;}
+h1 a:hover {color: @gray-dark;}

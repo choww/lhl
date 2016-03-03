@@ -17,11 +17,11 @@ class Movie < ActiveRecord::Base
   validate :release_date_is_in_past
 
   scope :search_movie, -> (title_or_director, duration) { 
-    where("title LIKE ? OR director LIKE ? AND runtime_in_minutes #{duration}", "%#{title_or_director}%", "%#{title_or_director}%")
+    where("(title LIKE ? OR director LIKE ?) AND runtime_in_minutes #{duration}", "%#{title_or_director}%", "%#{title_or_director}%")
    }
 
   def review_average
-    reviews.sum(:rating_out_of_ten)/reviews.size if reviews.exists?
+    reviews.exists? ? reviews.sum(:rating_out_of_ten)/reviews.size : 0
   end
 
   protected

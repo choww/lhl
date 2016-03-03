@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/search' => 'movies#search', as: :search
+
   resources :movies do 
     resources :roles, except: [:new, :create]
     resources :actors

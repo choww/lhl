@@ -1,8 +1,11 @@
-<h1>Profile for <%= full_name(@user) %></h1>
+<h1>Profile for <strong><%= full_name(@user) %></strong></h1>
+
+<p>email: <%= @user.email %></p>
+
 <h2>Movies reviewed</h2>
 
 <% @user.reviews.each do |review| %>
-  <%= review.movie.title %><br/>
+  <h3><%= link_to review.movie.title, movie_path(review.movie) %></h3>
   user rating: <%= review.rating_out_of_ten %>/10<br/>
   <p><%= review.text %></p>
 <% end %>
