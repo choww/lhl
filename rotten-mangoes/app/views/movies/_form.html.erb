@@ -10,27 +10,27 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="form-group">
     <%= f.label :title %><br/>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.label :release_date %><br/>
-    <%= f.date_field :release_date %>
+    <%= f.date_field :release_date, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.label :director %><br/>
-    <%= f.text_field :director %>
+    <%= f.text_field :director, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.label :runtime_in_minutes %><br/>
-    <%= f.number_field :runtime_in_minutes %>
+    <%= f.number_field :runtime_in_minutes, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.label :image %><br/>
     <%= f.file_field :image %>
     <% if f.object.image? %>
@@ -40,12 +40,12 @@
     <% end %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= f.label :description %><br/>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class: 'form-control' %>
   </div> 
 
   <div>
-    <%= f.submit "Submit" %>
+    <%= f.submit "Submit", class: 'btn btn-primary' %>
   </div>
 <% end %>

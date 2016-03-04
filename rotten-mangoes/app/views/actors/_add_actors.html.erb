@@ -1,27 +1,25 @@
-<h1>Add New Actor</h1>
+<h4>Add New Actor</h4>
 
-<%= form_for [@movie,@actor], class: 'form-inline', remote: true do |f| %>
-  <div class="row">
-    <div class="form-group col-md-4">
-      <%= f.label :firstname %>
-      <%= f.text_field :firstname, class: 'form-control' %>
-    </div>
+<%= form_for [@movie,@actor], remote: true do |f| %>
+  <div class="form-group">
+    <%= f.label :firstname %>
+    <%= f.text_field :firstname, class: 'form-control' %>
+  </div>
   
-    <div class="form-group col-md-4">
-      <%= f.label :lastname %>
-      <%= f.text_field :lastname, class: 'form-control' %>
-    </div>
+  <div class="form-group">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname, class: 'form-control' %>
+  </div>
   
-    <%= f.fields_for :roles do |ff| %>
-      <%= ff.hidden_field :movie_id, value: @movie.id %>
-      <div class="form-group col-md-4">
-        <%= ff.label :name, "Role" %>
-        <%= ff.text_field :name, class: 'form-control' %>
-      </div>
-    <% end %>
-  
-    <div class="form-group col-md-4">
-      <%= f.submit "Submit", class: 'btn btn-primary' %>
+  <%= f.fields_for :roles do |ff| %>
+    <%= ff.hidden_field :movie_id, value: @movie.id %>
+    <div class="form-group">
+      <%= ff.label :name, "Role" %>
+      <%= ff.text_field :name, class: 'form-control' %>
     </div>
-  </div>  
+  <% end %>
+  
+  <div class="form-group">
+    <%= f.submit "Submit", class: 'btn btn-primary' %>
+  </div>
 <% end %>

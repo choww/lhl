@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
       flash[:success] = "Welcome back #{user.firstname}!"
       redirect_to movies_path
     else
-      flash[:danger] = "Log in failed..."
-      render :new
+      flash[:danger] = "Log in failed"
+      redirect_to movies_path
     end
   end
 

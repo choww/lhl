@@ -1,19 +1,20 @@
 <div class="jumbotron text-center">
   <h1><%= link_to "Rotten Mangoes", movies_path %></h1>
-  <%= link_to "Submit a movie!", new_movie_path %><br/>
-
-  <small>
-    <% if current_user %>
+  
+  
+  <% if logged_in? %>
+    <%= link_to "Submit a movie!", new_movie_path %><br/>
+    <small>
       Signed in as <%= full_name(current_user) %> (<%= link_to "Log out", session_path("current"), method: :delete %>)
-    <% else %>
-      <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %> | 
-      <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#signup-modal" %> 
+    </small>
+  <% else %>
+    <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %> | 
+    <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#signup-modal" %> 
 
-      <%= render 'sessions/login' %>
-      <%= render 'users/signup' %>    
+    <%= render 'sessions/login' %>
+    <%= render 'users/signup' %>    
 
-    <% end %>
-  </small>
+  <% end %>
 
 </div>
 

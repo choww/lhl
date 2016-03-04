@@ -24,20 +24,52 @@
 
 /// VARIABLE OVERRIDES ///
 @yellow: #f2ab00;
+@red: #fb4a45;
 
 @link-color:@yellow;
 @btn-primary-bg: @yellow;
 @input-border: @yellow;
 @input-border-focus: @yellow;
 
-/// CSS OVERRIDES ///
+///// CSS OVERRIDES /////
 
+/// BASE ///
 h1 a { color: @gray-dark; }
-h1 a:hover { color: @gray-dark; }
-
-.delete-link { color: @brand-danger; }
-.delete-link:hover { color: darken(@brand-danger, 5%); } 
-
-#signup-form, #login-form { display: none; }
 
 input[type]:not([type="submit"]) { background: none; }
+
+/// LAYOUT ///
+footer {
+  background: @gray-lighter;
+  padding-bottom: 200px;
+  margin: 20px 0 0 0;
+}
+
+/// STATES ///
+h1 a:hover { color: @gray-dark; }
+
+.delete-link:hover { color: darken(@brand-danger, 5%); } 
+
+/// MODULES ///
+.movie-control {
+  background: @gray-lighter;
+  padding: 10px 0 5px 20px;
+  margin-right: 10px;
+}
+
+.delete-link { color: @red; }
+
+.close-btn { 
+  float: right; 
+  color: #fff;
+  background: @red;
+  padding:3px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toggle-form { 
+  display: none;
+  width: 70%
+ }
+

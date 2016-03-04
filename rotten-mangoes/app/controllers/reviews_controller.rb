@@ -2,25 +2,21 @@ class ReviewsController < ApplicationController
   before_action :load_movie
   before_action :restrict_access
 
-  def new
-    @review = @movie.reviews.build
-  end
-
   def create
     @review = @movie.reviews.build(review_params)
-    @review.user_id = current_user.id
+    @review.user = current_user
     
     if @review.save
-      redirect_to @movie, notice: "Review created"
-    else
-      render :new
+      render json: @review.as_json( include: {user: {only: [:firstname, :lastname]}} ), 
+                           status: :created, 
+                           location: @movie
     end
   end
 
   protected
     def review_params
       params.require(:review).permit(
-        :text, :rating_out_of_ten
+        :text, :rating_out_of_ten, :user_id
       )
     end
 

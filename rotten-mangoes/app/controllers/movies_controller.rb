@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.all
+    @movies = Movie.all.order(created_at: :desc)
     @user = User.new
   end
 
@@ -16,9 +16,14 @@ class MoviesController < ApplicationController
   end
 
   def show
+    @user ||= User.new
     @movie = Movie.find(params[:id])
+
     @actor = @movie.actors.build
     @actor.roles.build
+
+    @review = @movie.reviews.build
+    @reviews = Movie.find(params[:id]).reviews
   end
 
   def new
