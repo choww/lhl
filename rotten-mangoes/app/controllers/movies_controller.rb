@@ -2,6 +2,12 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all.order(created_at: :desc)
     @user = User.new
+    @movie = Movie.new
+  end
+
+  def poll_movies
+    @movies = Movie.all.order(created_at: :desc)
+    render json: @movies
   end
 
   def search
@@ -24,10 +30,6 @@ class MoviesController < ApplicationController
 
     @review = @movie.reviews.build
     @reviews = Movie.find(params[:id]).reviews
-  end
-
-  def new
-    @movie = Movie.new
   end
 
   def edit
@@ -55,7 +57,7 @@ class MoviesController < ApplicationController
   def destroy
     @movie = Movie.find(params[:id])
     @movie.destroy
-    redirect_to movies_path
+    redirect_to root_path
   end  
   
   protected

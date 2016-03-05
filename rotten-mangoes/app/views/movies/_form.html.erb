@@ -1,51 +1,67 @@
-<%= form_for @movie, html: { multipart: true } do |f| %>
-  <% if @movie.errors.any? %>
-    <div>
-      <%= pluralize(@movie.errors.count, "error") %> found:
-      <ul>
-        <% @movie.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+<div class="modal fade" id="add-movie-modal" tabindex="-1" role="dialog" aria-labelledby="add-movie-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h1 class="modal-title" id="add-movie-modalLabel">Movie</h1>
+      </div>
+
+      <div class="modal-body">
+        <%= form_for @movie, html: { multipart: true } do |f| %>
+          <% if @movie.errors.any? %>
+            <div>
+              <%= pluralize(@movie.errors.count, "error") %> found:
+              <ul>
+                <% @movie.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        
+          <div class="form-group">
+            <%= f.label :title %><br/>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :release_date %><br/>
+            <%= f.date_field :release_date, class: 'form-control' %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :director %><br/>
+            <%= f.text_field :director, class: 'form-control' %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :runtime_in_minutes %><br/>
+            <%= f.number_field :runtime_in_minutes, class: 'form-control' %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :image %><br/>
+            <%= f.file_field :image %>
+            <% if f.object.image? %>
+              <%= image_tag f.object.image.thumb.url %>
+              <%= f.label :remove_image %>
+              <%= f.check_box :remove_image %>
+            <% end %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :description %><br/>
+            <%= f.text_area :description, class: 'form-control' %>
+          </div> 
+        
+          <div>
+            <%= f.submit "Submit", class: 'btn btn-primary' %>
+          </div>
         <% end %>
-      </ul>
+      </div>
+    
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :title %><br/>
-    <%= f.text_field :title, class: 'form-control' %>
   </div>
-
-  <div class="form-group">
-    <%= f.label :release_date %><br/>
-    <%= f.date_field :release_date, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :director %><br/>
-    <%= f.text_field :director, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :runtime_in_minutes %><br/>
-    <%= f.number_field :runtime_in_minutes, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :image %><br/>
-    <%= f.file_field :image %>
-    <% if f.object.image? %>
-      <%= image_tag f.object.image.thumb.url %>
-      <%= f.label :remove_image %>
-      <%= f.check_box :remove_image %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :description %><br/>
-    <%= f.text_area :description, class: 'form-control' %>
-  </div> 
-
-  <div>
-    <%= f.submit "Submit", class: 'btn btn-primary' %>
-  </div>
-<% end %>
+</div>
