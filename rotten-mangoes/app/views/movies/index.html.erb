@@ -27,14 +27,5 @@
   <% @search_params.clear %>
 <% end %>
 
-<div id="poll_movies"></div>
-
-<button class="button btn btn-danger">ajax</button>
-
 <div class="row" id="all_movies">
-  <% @movies.each do |movie| %>
-    <div class="movie col-xs-4 col-md-3 col-xs-offset-1 col-md-offset-1">
-      <%= render partial: 'movies', locals: {movie: movie} %>
-    </div>
-  <% end %>
 </div>
