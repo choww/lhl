@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  getMovies();
+
+  if ($('#all_movies').length > 0) {
+    setTimeout(updateMovies,10000);  
+  }
   // build a div for each movie
   function getMovies() {
     $.get('/poll_movies', function(data, status) {
@@ -17,7 +22,7 @@ $(document).ready(function() {
         var movie_str = img + title + 'Directed by ' + director + br + runtime + ' minutes' + br + description;
         var col = 'movie col-xs-4 col-md-3 col-xs-offset-1 col-md-offset-1';
         $('<div>').addClass(col).html(movie_str).appendTo(movies); 
-      }; 
+      }); 
     });
   }
 
@@ -32,9 +37,4 @@ $(document).ready(function() {
     });
    }
 
-  getMovies();
-
-  if ($('#all_movies').length > 0) {
-    setTimeout(updateMovies,10000);  
-  }
 });
