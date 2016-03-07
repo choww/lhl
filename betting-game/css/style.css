@@ -1,0 +1,77 @@
+/**** BASE ****/
+body {
+  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+  margin: 50px; }
+
+div {
+  margin: 10px auto; }
+
+h2 {
+  color: #fd5252; }
+
+hr {
+  background: #0facad;
+  height: 1px;
+  border: none; }
+
+/**** LAYOUT ****/
+.container {
+  width: 60%;
+  text-align: center; }
+
+/**** MODULES ****/
+#bankroll {
+  color: #fff;
+  background: #0b7d7e;
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 72px;
+  max-width: 220px;
+  text-align: center; }
+
+.validation {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  background: #fd5252;
+  padding: 3px;
+  max-width: 500px; }
+
+#game-btn {
+  display: none; }
+
+.correct {
+  background: #0facad;
+  color: #fff; }
+
+.wrong {
+  background: #fd5252;
+  color: #fff; }
+
+.off-by-1 {
+  background: #ca4242;
+  color: #fff; }
+
+input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea {
+  border: 1px solid #0b7d7e;
+  border-radius: 5px;
+  color: #0facad;
+  padding: 5px; }
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  background: #0facad;
+  color: #fff;
+  border: 1px solid #0b7d7e;
+  border-radius: 3px;
+  padding: 5px; }
+
+/**** STATES ****/
+input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input:not([type]):focus, textarea:focus,
+input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="email"]:hover, input[type="month"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="time"]:hover, input[type="url"]:hover, input[type="week"]:hover, input:not([type]):hover, textarea:hover {
+  border-color: #0facad;
+  background: #f0fefe; }
+
+button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+  background: #0b7d7e; }
+
+/*# sourceMappingURL=style.css.map */

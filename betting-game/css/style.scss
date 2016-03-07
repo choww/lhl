@@ -1,0 +1,94 @@
+@import "bourbon/bourbon";
+
+$red: #fd5252;
+$faded-red: shade($red, 20%);
+$teal: #0b7d7e;
+$light-teal: lighten($teal, 10%);
+$lighter-teal: lighten($teal, 70%);
+
+/**** BASE ****/
+body {
+  font-family: $helvetica;
+  margin: 50px;
+}
+
+div {margin: 10px auto;}
+
+h2 { color: $red; }
+
+hr {
+  background: $light-teal;
+  height: 1px;
+  border: none;
+}
+
+/**** LAYOUT ****/
+.container {
+  width: 60%;
+  text-align: center;
+}
+
+/**** MODULES ****/
+#bankroll {
+  color: #fff;
+  background: $teal;
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 72px;
+  max-width: 220px;
+  text-align: center;
+}
+
+.validation {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  background: $red;
+  padding: 3px;
+  max-width: 500px;
+}
+
+#game-btn { display:none; }
+
+.correct { 
+  background: $light-teal; 
+  color: #fff;
+}
+
+.wrong {
+  background: $red;
+  color: #fff;
+}
+
+.off-by-1 {
+  background: $faded-red;
+  color: #fff;
+}
+
+#{$all-text-inputs} {
+  border: 1px solid $teal;
+  border-radius: 5px;
+  color: $light-teal;
+  padding: 5px;
+}
+
+
+#{$all-buttons} {
+  background: $light-teal;
+  color: #fff;
+  border: 1px solid $teal;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+
+/**** STATES ****/
+#{$all-text-inputs-focus},
+#{$all-text-inputs-hover} {
+  border-color: $light-teal;
+  background: $lighter-teal;
+}
+
+#{$all-buttons-hover} {
+  background: $teal;
+}

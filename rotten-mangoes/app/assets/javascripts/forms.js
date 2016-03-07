@@ -19,6 +19,7 @@ $(document).ready(function() {
     console.log('error');
   });
 
+  // NEW REVIEW FORM
   $('#new_review').on('ajax:success', function(event, review) {
     this.reset();
     var div = $('#movie-review');

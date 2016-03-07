@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>JS Betting Game</h1>
+
+      <div id="game-over">
+        <button id="game-btn">New Game?</button>
+      </div>
+
+      <p>You have:</p>
+      <div id="bankroll"></div>
+
+      <hr/>
+
+      <form id="player-input" action="#" validate>
+
+        <div class="form-input">
+          <label>Place a bet between $5 to $10:</label>
+          <input type="number" name="bet" min="5" max="10" required>
+        </div>
+
+        <div class="form-input">
+          <label>Guess a number between 1 to 10:</label>
+          <input type="number" name="guess" min="1" max="10" required>
+        </div>
+
+        <input type="submit" value="Guess">
+      </form>
+       
+      <div id="outcome"></div>
+      <div id="result"></div>
+    </div>
+
+    <script src="jquery-2.2.1.min.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>

@@ -7,5 +7,8 @@ class User < ActiveRecord::Base
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :password, length: { in: 6..20 }, on: :create
-
+  
+  def reviewed?(movie)
+    Review.where(user_id: id, movie_id: movie.id).exists?
+  end
 end

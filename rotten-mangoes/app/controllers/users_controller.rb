@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @movie = Movie.new
     @user = User.find(params[:id]) 
   end
 
