@@ -1,6 +1,6 @@
 <div class="text-center">
   <h2>Find a movie</h2>
-  <%= form_tag(search_path, method: 'get', class: 'form-inline') do %>
+  <%= form_tag(search_path, method: 'get', remote: true, id: 'search_movies', class: 'form-inline') do %>
     <div class="form-group">
       <%= label_tag(:title_or_director) %>
       <%= text_field_tag(:title_or_director, '', class: 'form-control') %>
@@ -27,5 +27,6 @@
   <% @search_params.clear %>
 <% end %>
 
-<div class="row" id="all_movies">
-</div>
+<div class="row" id="search_results"></div>
+
+<div class="row" id="all_movies"></div>

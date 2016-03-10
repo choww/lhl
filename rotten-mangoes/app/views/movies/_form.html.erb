@@ -10,16 +10,6 @@
 
       <div class="modal-body">
         <%= form_for @movie, html: { multipart: true } do |f| %>
-          <% if @movie.errors.any? %>
-            <div>
-              <%= pluralize(@movie.errors.count, "error") %> found:
-              <ul>
-                <% @movie.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
         
           <div class="form-group">
             <%= f.label :title %><br/>

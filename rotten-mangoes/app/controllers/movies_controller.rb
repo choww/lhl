@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   end
 
   def poll_movies
-    @movies = Movie.all.order(created_at: :desc)
+    @movies = Movie.all.order(updated_at: :desc)
     render json: @movies
   end
 
@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
       params[:duration] = '> 0' if params[:duration].nil? || params[:duration].empty?
       @movies = Movie.search_movie(params[:title_or_director], params[:duration])
     end
-    render :index
+    render json: @movies
   end
 
   def show
@@ -38,9 +38,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
     if @movie.save
-      redirect_to movies_path, info: "#{@movie.title} was submitted successfully!"
-    else
-      render :new
+      redirect_to root_path
     end
   end
 

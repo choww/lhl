@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
-  has_many :reviews
-  has_many :roles
+  has_many :reviews, dependent: :destroy
+  has_many :roles, dependent: :destroy
   has_many :actors, through: :roles
 
   mount_uploader :image, ImageUploader
