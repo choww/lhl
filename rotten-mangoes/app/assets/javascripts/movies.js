@@ -26,28 +26,29 @@ $(function() {
     $('<img>').attr('src', movie.image.thumb.url).prependTo(div);
   }
 
-  // TODO: refactor
+  // MOVIE SEARCH FORM
   $('#search_movies').on('ajax:success', function(event, data) {
     this.reset();
-    data.forEach(function(movie) {
-      $('#all_movies').addClass('hidden');
-      var movies = $('#search_results');
+    data.forEach(
+      function(movie) {
+        $('#all_movies').addClass('hidden');
+        var movies = $('#search_results');
 
-      var br = '<br/>';
-      var release = movie.release_date;
-      var director = 'Directed by ' + movie.director;
-      var runtime = movie.runtime_in_minutes + ' minutes';
-      var description = movie.description;
+        var br = '<br/>';
+        var release = movie.release_date;
+        var director = 'Directed by ' + movie.director;
+        var runtime = movie.runtime_in_minutes + ' minutes';
+        var description = movie.description;
 
-      var movie_str = director + br + runtime + br + description;
-      var col = 'movie col-xs-4 col-md-3 col-xs-offset-1 col-md-offset-1';
-      var updated = movie.updated_at;
-      var div = $('<div>').addClass(col).attr('data-updated', updated).html(movie_str).appendTo(movies); 
-      
-      var movie_url = '/movies/' + movie.id;
-      $('<h2>').html('<a href=' + movie_url + '>' + movie.title + '</a>').prependTo(div);
-      $('<img>').attr('src', movie.image.thumb.url).prependTo(div);    
-    });
+        var movie_str = director + br + runtime + br + description;
+        var col = 'movie col-xs-4 col-md-3 col-xs-offset-1 col-md-offset-1';
+        var updated = movie.updated_at;
+        var div = $('<div>').addClass(col).attr('data-updated', updated).html(movie_str).appendTo(movies); 
+        
+        var movie_url = '/movies/' + movie.id;
+        $('<h2>').html('<a href=' + movie_url + '>' + movie.title + '</a>').prependTo(div);
+        $('<img>').attr('src', movie.image.thumb.url).prependTo(div);    
+      });
   });
 
   
