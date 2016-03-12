@@ -1,22 +1,31 @@
 <div class="header text-center">
   <h1><%= link_to "Rotten Mangoes", root_path %></h1>
-  
-  <nav> 
+
+  <nav>
     <% if logged_in? %>
-      <%= link_to "Submit a movie!", '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" %>
+      <% if controller_name == "movies" && action_name == "show" %>
+        <%= link_to '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" do %>
+          <span class="glyphicon glyphicon-pencil"></span> Edit movie
+        <% end %>
+        <%= link_to movie_path(@movie), id: 'delete-movie', method: :delete, data: { confirm: "You sure?" } do %>
+          <span class="glyphicon glyphicon-trash"></span> Delete movie
+        <% end %>
+      <% else %>
+        <%= link_to "Submit a movie!", '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" %>
+      <% end %>
+
       <div class="logged-in">
         Signed in as <%= link_to full_name(current_user), user_path(current_user), id: 'user-link' %> <%= link_to "Log out", session_path("current"), method: :delete, id: 'delete-link' %>
       </div>
       <%= render 'movies/form' %>
 
     <% else %>
-      <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %> 
-      <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#signup-modal" %> 
+      <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %>
+      <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#user-modal" %>
 
       <%= render 'sessions/login' %>
-      <%= render 'users/signup' %>    
-     
     <% end %>
+
+    <%= render 'users/form' %>
   </nav>
 </div>
-

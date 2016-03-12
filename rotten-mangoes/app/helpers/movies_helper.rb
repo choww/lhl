@@ -1,5 +1,5 @@
 module MoviesHelper
-  def formatted_date(date)
-    date.strftime("%b %d, %Y")
+  def movie_modal_header(action)
+    action == 'new' ? "Submit a Movie" : "Edit Movie"
   end
 end

@@ -8,22 +8,8 @@
   <div class="col-md-4 col-md-offset-1">
     <%= image_tag(@movie.image.thumb.url) %>
     
-    <div class="movie-control">
-    <% if logged_in? %>
-      <p>
-        <%= link_to '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" do %>
-          <span class="glyphicon glyphicon-pencil"></span> edit
-        <% end %>
-        <br/>
-        <%= link_to movie_path(@movie), class: 'delete-link', method: :delete, data: {confirm: "You sure?"} do %>
-          <span class="glyphicon glyphicon-trash"></span> delete
-        <% end %>
-      </p>
-    <% end %>
-  </div>
-
     <h4>Average review: <%= @movie.review_average %>/10</h4>
-    <h4><%= formatted_date(@movie.release_date) %></h4>
+    <h4>Released: <%= format_date(@movie.release_date) %></h4>
     <h4>Directed by <%= @movie.director %> | <%= @movie.runtime_in_minutes %> minutes</h4>
 
     <p><%= @movie.description %></p>
@@ -31,7 +17,7 @@
     <h3>Cast</h3>
     <% @movie.roles.each do |role| %>
       <p>
-        <%= role.name %>: <%= full_name(role.actor) %>
+        <strong><%= role.name %></strong>: <%= full_name(role.actor) %>
       </p>
     <% end %>
 

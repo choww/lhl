@@ -1,17 +1,14 @@
 $(function() {
-  getMovies();
- 
-  setInterval(updateMovies, 10000);
-
   function getMovies() {
-    $.ajax('/poll_movies', { dataType: 'json' })
-      .done(function(data) {
-        console.log('called?');
+    $.ajax('/poll_movies', { 
+        dataType: 'json',
+        success: function(data) {
         var movies = $('#all_movies');
-        data.forEach(function(movie) {
-          buildMovie(movie, movies);
-        }); 
-      });
+          data.forEach(function(movie) {
+            buildMovie(movie, movies);
+          }); 
+        }
+     });
   }
 
   // poll request made every 10 seconds--but only reload data if additions or updates have been made
@@ -19,7 +16,8 @@ $(function() {
     var most_recent = $('.movie').first().attr('data-updated');
 
     $.ajax('/poll_movies', {
-      success: function(data, status) {
+      dataType: 'json',
+      success: function(data) {
         var movies = $('#all_movies');
         if (data[0].updated_at != most_recent) {
           movies.empty();       
@@ -27,10 +25,9 @@ $(function() {
         }
       }
     });
-  }
+   }
 
   // build a div for each movie and append it to the movies div
-  // TODO: find better way to organize divs
   function buildMovie(movie, movies) {
     var br = '<br/>';
     var release = new Date(movie.release_date);
@@ -62,4 +59,9 @@ $(function() {
   });
 
 
+  if ($('#all_movies').length > 0) {
+    setInterval(updateMovies, 10000);
+  }
+
+  getMovies();
 });

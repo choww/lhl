@@ -2,6 +2,8 @@ class MoviesController < ApplicationController
   def index
     @user = User.new
     @movie = Movie.new
+    @movie_action = 'new'
+    @user_action = 'new'
   end
 
   def poll_movies
@@ -22,17 +24,15 @@ class MoviesController < ApplicationController
 
   def show
     @user ||= User.new
+    @user_action = 'new'
     @movie = Movie.find(params[:id])
+    @movie_action = 'edit'
 
     @actor = @movie.actors.build
     @actor.roles.build
 
     @review = @movie.reviews.build
     @reviews = Movie.find(params[:id]).reviews
-  end
-
-  def edit
-    @movie = Movie.find(params[:id])
   end
 
   def create

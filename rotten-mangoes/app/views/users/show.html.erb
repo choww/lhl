@@ -4,6 +4,11 @@
   <div class="col-md-4">
 
     <p>
+      <% if current_user == @user %>
+        <%= link_to "edit profile", '#', "data-toggle" => "modal", "data-target" => "#user-modal" %>
+      <% end %>
+    </p>
+    <p>
       <em>Member since: <%= format_date(@user.created_at) %></em>
     </p>
     

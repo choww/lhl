@@ -36,29 +36,35 @@
 @input-border: @yellow;
 @input-border-focus: @yellow;
 
+
+/// MIXINS ///
+.h-margin { margin: 10px 0; }
+.gochi-font { font-family: 'Gochi Hand', Helvetica; }
+.roboto-font { font-family: 'Roboto', Helvetica; }
+
 ///// CSS OVERRIDES /////
 
 /// BASE ///
 body {
   background: url('/assets/dots.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: @gray-dark;
-  font-family: 'Roboto', Helevetica;
 }
 
+h1 {.gochi-font; }
 h1 a {
   color: #fff;
   font-size: 120px;
-  font-family: 'Gochi Hand';
+  .gochi-font;
+  .h-margin;
 }
 
 h2 {
-  font-family: 'Gochi Hand';
   font-size: 40px;
-  margin: 10px 0; 
+  .gochi-font;
+  .h-margin;
 }
 
-h3 { margin: 10px 0; }
+h3 { .h-margin; }
 
 input[type]:not([type="submit"]) { 
   background: none; 
@@ -68,8 +74,8 @@ input[type]:not([type="submit"]) {
 a:link,
 a:active,
 a:visited {
-  font-family: 'Roboto', Helvetica;
   font-weight: 600;
+  .roboto-font;
 }
 
 strong { color: @red; }
@@ -86,16 +92,17 @@ strong { color: @red; }
   background: #fff;
   opacity: 0.9;
   padding: 30px;
-  font-family: 'Roboto', 'Helvetica';
   text-align: justify;
+  .roboto-font;
 }
 
 footer {
   padding-bottom: 200px;
-  margin: 20px 0 0 0;
+  margin-top: 20px;
 }
 
 /// STATES ///
+
 a:hover { text-decoration: none; }
 
 h1 a:hover { color: #fff; }
@@ -107,28 +114,31 @@ nav {
   }
 }
 
+#delete-movie:hover { background: @orange; }
+
 a:hover,
 #user-link:hover,
 #delete-link:hover
-{ color: darken(@brand-danger, 5%); }
+{ color: darken(@red, 5%); }
 
 .hidden { display:none; }
 
 /// MODULES ///
 nav {
-  font-family: 'Roboto';
   font-weight: 700;
   font-size: 30px;
   font-variant: small-caps;
-
+  .roboto-font;
   a {
     background: @yellow;
-    opacity: 0.9;
+    opacity: 0.8;
     color: @gray-dark;
     padding: 5px 30px;
     margin: 0 30px;
   }
 }
+
+#delete-movie { background: @red; }
 
 #user-link,
 #delete-link {
@@ -141,14 +151,9 @@ nav {
 
 #add-movie-modal,
 #login-modal,
-#signup-modal
-{ color: @gray-dark; }
-
-.movie-control {
-  background: @gray-lighter;
-  padding: 10px 0 5px 20px;
-  margin: 10px 10px 0 0;
-  width: 50%;
+#user-modal { 
+  color: @gray-dark;
+  font-size: 16px;
 }
 
 #all_movies,
