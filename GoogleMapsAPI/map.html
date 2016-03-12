@@ -15,8 +15,8 @@
     <div id="map"></div>
 
     <script>
-      var map;
       function initMap() {
+        var map;
         map = new google.maps.Map(document.getElementById('map'), {
        //   center: {lat: -34.397, lng: 150.644},
           zoom: 15 
@@ -51,10 +51,21 @@
         }
 
         function createMarker(place) {
-          var location = place.geometry.location;
-          var marker = new google.maps.Marker({
+          var place_marker = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 1, 
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
             map: map,
-            position: place.geometry.location
+            center: place.geometry.location,
+            position: place.geometry.location,
+            radius: 20
+          });
+
+          google.maps.event.addListener(place_marker, 'click', function() {
+            infoWindow.setContent(place.name + '<br/>' + place.formatted_address);
+            infoWindow.open(map, this);
           });
         }
 
@@ -70,11 +81,18 @@
           // search for lunch places
           service.nearbySearch({
             location: pos,
-            radius: 500,
-            type: ['lunch']
+            radius: 25250,
+            type: ['restaurants']
           }, getPlaces);
 
         });
+    
+        // styles
+        var mapStyles = new google.maps.StyledMapType([
+          {
+            stylers: [ {visibility: 'simplified'} ]
+          }],
+           { name: 'Custom Style' });
 
       }
     </script>

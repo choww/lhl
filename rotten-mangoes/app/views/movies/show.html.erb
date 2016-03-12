@@ -29,21 +29,22 @@
     <p><%= @movie.description %></p>
 
     <h3>Cast</h3>
+    <% @movie.roles.each do |role| %>
+      <p>
+        <%= role.name %>: <%= full_name(role.actor) %>
+      </p>
+    <% end %>
+
     <% if logged_in? %>
       <%= link_to 'Add a new actor/actress', '', class: 'toggle-form-link' %>
       
+    <div id="movie-cast"></div>
       <div class="toggle-form">
         <%= render 'shared/close_btn' %> 
         <%= render 'actors/add_actors' %>
       </div>
     <% end %>
       
-    <% @movie.roles.each do |role| %>
-      <p>
-        <%= role.name %>: <%= full_name(role.actor) %>
-      </p>
-    <% end %>
-    <div id="movie-cast"></div>
   </div>
 
   <div class="col-md-6">

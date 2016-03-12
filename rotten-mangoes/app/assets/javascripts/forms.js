@@ -23,12 +23,13 @@ $(function() {
   $('#new_review').on('ajax:success', function(event, review) {
     this.reset();
     var div = $('#movie-review');
-    
+    console.log(review);
     $('<p>').text(review.text).appendTo(div);
     $('<p>').text(review.rating_out_of_ten + '/10').appendTo(div);
 
-    // TODO: profile link doesn't currently include review user id
     var fullname = review.user.firstname + ' ' + review.user.lastname;
-    $('<p>').html("Reviewed by: <a href='/user/'" + review.user_id + "'>" + fullname + "</a>").appendTo(div);
+    var reviewer = $('<p>').appendTo(div);
+    reviewer.text('Reviewed by: ');
+    $('<a>').attr('href', '/users/' + review.user_id).text(fullname).appendTo(reviewer);
   });
 });

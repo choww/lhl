@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
+  before_action :init_movie
 
   def index
     @users = User.page(params[:page]).per(2)
@@ -30,5 +31,9 @@ class Admin::UsersController < ApplicationController
       params.require(:user).permit(
         :firstname, :lastname, :email, :admin?, :password
       )
+    end
+  
+    def init_movie
+      @movie = Movie.new
     end
 end

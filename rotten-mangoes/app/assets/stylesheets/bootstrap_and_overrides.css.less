@@ -22,8 +22,13 @@
 // Glyphicons
 @import "twitter/bootstrap/glyphicons.less";
 
+/// FONTS ///
+
+@import url(https://fonts.googleapis.com/css?family=Gochi+Hand|Roboto);
+
 /// VARIABLE OVERRIDES ///
 @yellow: #f2ab00;
+@orange: #ff6700;
 @red: #fb4a45;
 
 @link-color:@yellow;
@@ -34,25 +39,111 @@
 ///// CSS OVERRIDES /////
 
 /// BASE ///
-h1 a { color: @gray-dark; }
+body {
+  background: url('/assets/dots.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: @gray-dark;
+  font-family: 'Roboto', Helevetica;
+}
 
-input[type]:not([type="submit"]) { background: none; }
+h1 a {
+  color: #fff;
+  font-size: 120px;
+  font-family: 'Gochi Hand';
+}
+
+h2 {
+  font-family: 'Gochi Hand';
+  font-size: 40px;
+  margin: 10px 0; 
+}
+
+h3 { margin: 10px 0; }
+
+input[type]:not([type="submit"]) { 
+  background: none; 
+  color: @orange;
+}
+
+a:link,
+a:active,
+a:visited {
+  font-family: 'Roboto', Helvetica;
+  font-weight: 600;
+}
+
+strong { color: @red; }
 
 /// LAYOUT ///
+.header {
+  padding-top: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.container {
+  background: #fff;
+  opacity: 0.9;
+  padding: 30px;
+  font-family: 'Roboto', 'Helvetica';
+  text-align: justify;
+}
+
 footer {
-  background: @gray-lighter;
   padding-bottom: 200px;
   margin: 20px 0 0 0;
 }
 
 /// STATES ///
-h1 a:hover { color: @gray-dark; }
+a:hover { text-decoration: none; }
 
-.delete-link:hover { color: darken(@brand-danger, 5%); } 
+h1 a:hover { color: #fff; }
+
+nav {
+  a:hover {
+    color: #fff;
+    background: @orange;
+  }
+}
+
+a:hover,
+#user-link:hover,
+#delete-link:hover
+{ color: darken(@brand-danger, 5%); }
 
 .hidden { display:none; }
 
 /// MODULES ///
+nav {
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 30px;
+  font-variant: small-caps;
+
+  a {
+    background: @yellow;
+    opacity: 0.9;
+    color: @gray-dark;
+    padding: 5px 30px;
+    margin: 0 30px;
+  }
+}
+
+#user-link,
+#delete-link {
+  background: none;
+  padding: 0;
+}
+
+#user-link { color: @yellow; }
+#delete-link { color: @red; }
+
+#add-movie-modal,
+#login-modal,
+#signup-modal
+{ color: @gray-dark; }
+
 .movie-control {
   background: @gray-lighter;
   padding: 10px 0 5px 20px;
@@ -60,10 +151,14 @@ h1 a:hover { color: @gray-dark; }
   width: 50%;
 }
 
-.delete-link { color: @red; }
+#all_movies,
+#search_movies
+{margin: auto;}
 
-.close-btn { 
-  float: right; 
+.movie { margin-bottom: 20px; }
+
+.close-btn {
+  float: right;
   color: #fff;
   background: @red;
   padding:3px 5px;
@@ -71,8 +166,7 @@ h1 a:hover { color: @gray-dark; }
   cursor: pointer;
 }
 
-.toggle-form { 
+.toggle-form {
   display: none;
   width: 70%
  }
-

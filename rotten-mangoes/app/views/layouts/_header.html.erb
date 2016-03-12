@@ -1,23 +1,22 @@
-<div class="jumbotron text-center">
+<div class="header text-center">
   <h1><%= link_to "Rotten Mangoes", root_path %></h1>
   
-  
-  <% if logged_in? %>
-    <%= link_to "Submit a movie!", '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" %>
-    <br/>
-    <small>
-      Signed in as <%= link_to full_name(current_user), user_path(current_user) %> (<%= link_to "Log out", session_path("current"), method: :delete, class: 'delete-link' %>)
-    </small>
-     <%= render 'movies/form' %>
+  <nav> 
+    <% if logged_in? %>
+      <%= link_to "Submit a movie!", '#', "data-toggle" => "modal", "data-target" => "#add-movie-modal" %>
+      <div class="logged-in">
+        Signed in as <%= link_to full_name(current_user), user_path(current_user), id: 'user-link' %> <%= link_to "Log out", session_path("current"), method: :delete, id: 'delete-link' %>
+      </div>
+      <%= render 'movies/form' %>
 
-  <% else %>
-    <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %> | 
-    <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#signup-modal" %> 
+    <% else %>
+      <%= link_to "Log In", '#', "data-toggle" => "modal", "data-target" => "#login-modal" %> 
+      <%= link_to "Sign Up", '#', "data-toggle" => "modal", "data-target" => "#signup-modal" %> 
 
-    <%= render 'sessions/login' %>
-    <%= render 'users/signup' %>    
-   
-  <% end %>
-
+      <%= render 'sessions/login' %>
+      <%= render 'users/signup' %>    
+     
+    <% end %>
+  </nav>
 </div>
 

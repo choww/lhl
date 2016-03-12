@@ -1,12 +1,23 @@
-<h1>Profile for <strong><%= full_name(@user) %></strong></h1>
+<h2>Profile for <strong><%= full_name(@user) %></strong></h2>
 
-<p>email: <%= @user.email %></p>
+<div class="row">
+  <div class="col-md-4">
 
-<h2>Movies reviewed</h2>
-
-<% @user.reviews.each do |review| %>
-  <h3><%= link_to review.movie.title, movie_path(review.movie) %></h3>
-  user rating: <%= review.rating_out_of_ten %>/10<br/>
-  <p><%= review.text %></p>
-<% end %>
-
+    <p>
+      <em>Member since: <%= format_date(@user.created_at) %></em>
+    </p>
+    
+    <p>email: <%= @user.email %></p>
+    <p>Number of movies reviewed: <%= @user.reviews.count %></p>
+  </div>
+  
+  <div class="col-md-8">
+    <h3>Movies reviewed</h3>
+    
+    <% @user.reviews.each do |review| %>
+      <h3><%= link_to review.movie.title, movie_path(review.movie) %></h3>
+      user rating: <%= review.rating_out_of_ten %>/10<br/>
+      <p><%= review.text %></p>
+    <% end %>
+  </div>
+</div>
