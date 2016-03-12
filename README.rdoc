@@ -1,0 +1,5 @@
+== README
+
+Rotten Tomatoes clone built with Ruby on Rails 4 and jQuery. Styled using Bootstrap with LESS.
+
+run *rails s* to start server, and visit *http://localhost:3000* in your browser.

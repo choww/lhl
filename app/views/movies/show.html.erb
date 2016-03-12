@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h2><%= @movie.title %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-1">
+    <%= image_tag(@movie.image.thumb.url) %>
+    
+    <h4>Average review: <%= @movie.review_average %>/10</h4>
+    <h4>Released: <%= format_date(@movie.release_date) %></h4>
+    <h4>Directed by <%= @movie.director %> | <%= @movie.runtime_in_minutes %> minutes</h4>
+
+    <p><%= @movie.description %></p>
+
+    <h3>Cast</h3>
+    <% @movie.roles.each do |role| %>
+      <p>
+        <strong><%= role.name %></strong>: <%= full_name(role.actor) %>
+      </p>
+    <% end %>
+
+    <% if logged_in? %>
+      <div id="movie-cast"></div>
+
+      <%= link_to 'Add a new actor/actress', '#', class: 'toggle-form-link' %>
+      <div class="toggle-form">
+        <%= render 'shared/close_btn' %> 
+        <%= render 'actors/add_actors' %>
+      </div>
+    <% end %>
+      
+  </div>
+
+  <div class="col-md-6">
+    <h3>Reviews</h3>
+   
+    <div id="movie-review"></div> 
+
+    <% if @reviews.exists? %>
+      <% @reviews.each do |review| %>
+        <p><%= review.text %></p>
+        <p><%= review.rating_out_of_ten %>/10</p>
+        <p>Reviewed by: <%= link_to full_name(review.user), user_path(review.user) %></small></p>
+      <% end %>
+    <% end %>
+    
+    <hr/>
+    <% if logged_in? && !current_user.reviewed?(@movie) %>
+      <%= link_to "Write a review!", '#', class: 'toggle-form-link' %>
+    
+      <div class="toggle-form">
+        <%= render 'shared/close_btn' %>
+        <%= render 'reviews/add_review' %>
+      </div>  
+    <% end %>
+  </div>
+
+
+</div>

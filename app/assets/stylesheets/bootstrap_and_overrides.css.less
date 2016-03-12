@@ -1,0 +1,176 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/variables.less";
+@import "twitter/bootstrap/mixins.less";
+
+// Set correct font paths
+@glyphiconsEotPath: font-url("glyphicons-halflings-regular.eot");
+@glyphiconsEotPath_iefix: font-url("glyphicons-halflings-regular.eot?#iefix");
+@glyphiconsWoffPath: font-url("glyphicons-halflings-regular.woff");
+@glyphiconsTtfPath: font-url("glyphicons-halflings-regular.ttf");
+@glyphiconsSvgPath: font-url("glyphicons-halflings-regular.svg#glyphicons_halflingsregular");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+@fontAwesomeEotPath: font-url("fontawesome-webfont.eot");
+@fontAwesomeEotPath_iefix: font-url("fontawesome-webfont.eot?#iefix");
+@fontAwesomeWoffPath: font-url("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: font-url("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: font-url("fontawesome-webfont.svg#fontawesomeregular");
+
+// Font Awesome
+@import "fontawesome/font-awesome";
+
+// Glyphicons
+@import "twitter/bootstrap/glyphicons.less";
+
+/// FONTS ///
+
+@import url(https://fonts.googleapis.com/css?family=Gochi+Hand|Roboto);
+
+/// VARIABLE OVERRIDES ///
+@yellow: #f2ab00;
+@orange: #ff6700;
+@red: #fb4a45;
+
+@link-color:@yellow;
+@btn-primary-bg: @yellow;
+@input-border: @yellow;
+@input-border-focus: @yellow;
+
+
+/// MIXINS ///
+.h-margin { margin: 10px 0; }
+.gochi-font { font-family: 'Gochi Hand', Helvetica; }
+.roboto-font { font-family: 'Roboto', Helvetica; }
+
+///// CSS OVERRIDES /////
+
+/// BASE ///
+body {
+  background: url('/assets/dots.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+h1 a {
+  color: #fff;
+  font-size: 120px;
+  .gochi-font;
+  .h-margin;
+}
+
+h2 {
+  font-size: 40px;
+  .gochi-font;
+  .h-margin;
+}
+
+h3 { .h-margin; }
+
+input[type]:not([type="submit"]) { 
+  background: none; 
+  color: @orange;
+}
+
+a:link,
+a:active,
+a:visited {
+  font-weight: 600;
+  .roboto-font;
+}
+
+strong { color: @red; }
+
+/// LAYOUT ///
+.header {
+  padding-top: 50px;
+  padding-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.container {
+  background: #fff;
+  opacity: 0.9;
+  padding: 30px;
+  text-align: justify;
+  .roboto-font;
+}
+
+footer {
+  padding-bottom: 200px;
+  margin-top: 20px;
+}
+
+/// STATES ///
+
+a:hover { text-decoration: none; }
+
+h1 a:hover { color: #fff; }
+
+nav {
+  a:hover {
+    color: #fff;
+    background: @orange;
+  }
+}
+
+#delete-movie:hover { background: @orange; }
+
+a:hover,
+#user-link:hover,
+#delete-link:hover
+{ color: darken(@red, 5%); }
+
+.hidden { display:none; }
+
+/// MODULES ///
+nav {
+  font-weight: 700;
+  font-size: 30px;
+  font-variant: small-caps;
+  .roboto-font;
+  a {
+    background: @yellow;
+    opacity: 0.8;
+    color: @gray-dark;
+    padding: 5px 30px;
+    margin: 0 30px;
+  }
+}
+
+#delete-movie { background: @red; }
+
+#user-link,
+#delete-link {
+  background: none;
+  padding: 0;
+}
+
+#user-link { color: @yellow; }
+#delete-link { color: @red; }
+
+#add-movie-modal,
+#login-modal,
+#user-modal { 
+  color: @gray-dark;
+  font-size: 16px;
+}
+
+#all_movies,
+#search_movies
+{margin: auto;}
+
+.movie { margin-bottom: 20px; }
+
+.close-btn {
+  float: right;
+  color: #fff;
+  background: @red;
+  padding:3px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toggle-form {
+  display: none;
+  width: 70%
+ }

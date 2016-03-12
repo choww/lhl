@@ -1,0 +1,28 @@
+<h2>Profile for <strong><%= full_name(@user) %></strong></h2>
+
+<div class="row">
+  <div class="col-md-4">
+
+    <p>
+      <% if current_user == @user %>
+        <%= link_to "edit profile", '#', "data-toggle" => "modal", "data-target" => "#user-modal" %>
+      <% end %>
+    </p>
+    <p>
+      <em>Member since: <%= format_date(@user.created_at) %></em>
+    </p>
+    
+    <p>email: <%= @user.email %></p>
+    <p>Number of movies reviewed: <%= @user.reviews.count %></p>
+  </div>
+  
+  <div class="col-md-8">
+    <h3>Movies reviewed</h3>
+    
+    <% @user.reviews.each do |review| %>
+      <h3><%= link_to review.movie.title, movie_path(review.movie) %></h3>
+      user rating: <%= review.rating_out_of_ten %>/10<br/>
+      <p><%= review.text %></p>
+    <% end %>
+  </div>
+</div>
