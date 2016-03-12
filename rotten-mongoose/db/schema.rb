@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302034026) do
+ActiveRecord::Schema.define(version: 20160312210507) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "actors", force: :cascade do |t|
     t.string   "firstname"
@@ -40,19 +43,14 @@ ActiveRecord::Schema.define(version: 20160302034026) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "reviews", ["movie_id"], name: "index_reviews_on_movie_id"
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
+  add_index "reviews", ["movie_id"], name: "index_reviews_on_movie_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.integer  "movie_id"
-    t.integer  "actor_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "actor_id"
+    t.integer "movie_id"
+    t.string  "name"
   end
-
-  add_index "roles", ["actor_id"], name: "index_roles_on_actor_id"
-  add_index "roles", ["movie_id"], name: "index_roles_on_movie_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -64,4 +62,6 @@ ActiveRecord::Schema.define(version: 20160302034026) do
     t.boolean  "admin?",          default: false
   end
 
+  add_foreign_key "reviews", "movies"
+  add_foreign_key "reviews", "users"
 end

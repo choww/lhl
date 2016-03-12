@@ -1,4 +1,11 @@
 # USERS 
+User.create(
+  firstname: 'guest',
+  lastname: 'user',
+  email: 'guest@guest.ca',
+  password: 'guest123'
+)
+
 10.times do 
   User.create(
     firstname: Faker::Name.first_name,
