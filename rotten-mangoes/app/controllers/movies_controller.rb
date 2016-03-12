@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
   end
 
   def search
+    # check if search form is empty
     search_params = [params[:title_or_director], params[:duration]]
     @search_params = search_params.select { |param| !param.nil? }
 

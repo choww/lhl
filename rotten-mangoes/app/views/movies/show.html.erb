@@ -22,9 +22,9 @@
     <% end %>
 
     <% if logged_in? %>
-      <%= link_to 'Add a new actor/actress', '', class: 'toggle-form-link' %>
-      
-    <div id="movie-cast"></div>
+      <div id="movie-cast"></div>
+
+      <%= link_to 'Add a new actor/actress', '#', class: 'toggle-form-link' %>
       <div class="toggle-form">
         <%= render 'shared/close_btn' %> 
         <%= render 'actors/add_actors' %>
@@ -42,13 +42,13 @@
       <% @reviews.each do |review| %>
         <p><%= review.text %></p>
         <p><%= review.rating_out_of_ten %>/10</p>
-        Reviewed by: <%= link_to full_name(review.user), user_path(review.user) %></small></br/>
+        <p>Reviewed by: <%= link_to full_name(review.user), user_path(review.user) %></small></p>
       <% end %>
     <% end %>
     
     <hr/>
     <% if logged_in? && !current_user.reviewed?(@movie) %>
-      <%= link_to "Write a review!", '', class: 'toggle-form-link' %>
+      <%= link_to "Write a review!", '#', class: 'toggle-form-link' %>
     
       <div class="toggle-form">
         <%= render 'shared/close_btn' %>

@@ -58,7 +58,6 @@ $(function() {
     });
   });
 
-
   if ($('#all_movies').length > 0) {
     setInterval(updateMovies, 10000);
   }

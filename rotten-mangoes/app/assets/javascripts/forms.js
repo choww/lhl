@@ -13,8 +13,10 @@ $(function() {
   $('#new_actor').on('ajax:success', function(event, actor) {
     this.reset();
     var div = $('#movie-cast');
-    var string = actor.roles[0].name + ': ' + actor.firstname + ' ' + actor.lastname;
-    $('<p>').text(string).appendTo(div);
+    var new_actor = $('<p>').appendTo(div);
+    $('<strong>').text(actor.roles[0].name).appendTo(new_actor);
+    $('<span>').text(': ' + actor.firstname + ' ' + actor.lastname).appendTo(new_actor);
+
   }).on('ajax:error', function(event, actor) {
     console.log('error');
   });
